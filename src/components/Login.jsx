@@ -33,7 +33,7 @@ const Login = () => {
       navigate("/feed")
     } catch (err) {
       console.log(err);
-      setError(err.message);
+      setError(err?.response?.data || "Something went wrong");
     }
   };
   return (
@@ -46,7 +46,7 @@ const Login = () => {
           <EmailInputField setEmail={setEmail} />
           <PasswordInputField setPassword={setPassword} />
           <div className="flex justify-center py-1">
-            <h4>{error}</h4>
+            <h4 className="text-red-500">{error}</h4>
           </div>
           <div className="card-actions justify-center py-1">
             <button className="btn btn-primary" onClick={handleSubmit}>

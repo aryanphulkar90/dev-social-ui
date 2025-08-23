@@ -12,7 +12,7 @@ const Body = () => {
   const navigate = useNavigate();
   const fetchUser = async () => {
     try {
-      const user = await axios.get(`${baseURL}/profile/view`, {}, {
+      const user = await axios.get(`${baseURL}/profile/view`, {
         withCredentials: true,
       });
       dispatch(addUser(user.data.data));
