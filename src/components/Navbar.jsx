@@ -26,7 +26,9 @@ const Navbar = () => {
   return (
     <div className="navbar shadow-sm bg-base-200">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">devSocial</a>
+        <Link to="/feed" className="btn btn-ghost text-xl">
+          devSocial
+        </Link>
       </div>
       {user && (
         <div className="flex gap-2">
@@ -49,7 +51,12 @@ const Navbar = () => {
               <li>
                 <Link to="/profile" className="justify-between">
                   Profile
-                  <span className="badge">New</span>
+                  {/* <span className="badge">New</span> */}
+                </Link>
+              </li>
+              <li>
+                <Link to="/connections" className="justify-between">
+                  Connections
                 </Link>
               </li>
               <li>
