@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { baseURL } from "../utils/constansts";
 import axios from "axios";
 import { removeUser } from "../utils/userSlice";
+import { removeAllConnections } from "../utils/connectionSlice";
+import { removeAllRequests } from "../utils/requestSlice";
+import { removeFeed } from "../utils/feedSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -18,6 +21,9 @@ const Navbar = () => {
           withCredentials: true,
         }
       );
+      dispatch(removeAllConnections())
+      dispatch(removeAllRequests())
+      dispatch(removeFeed())
       navigate("/login");
     } catch (err) {
       console.log(err)
@@ -57,6 +63,11 @@ const Navbar = () => {
               <li>
                 <Link to="/connections" className="justify-between">
                   Connections
+                </Link>
+              </li>
+              <li>
+                <Link to="/requests" className="justify-between">
+                  Requests
                 </Link>
               </li>
               <li>

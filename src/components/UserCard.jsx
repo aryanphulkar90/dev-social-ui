@@ -12,9 +12,7 @@ const UserCard = (props) => {
     <>
       <div className="flex justify-center m-3 rounded-lg">
         <div className="card bg-base-100 w-96 ">
-          <figure>
-            <img src={user.photoURL} alt="Shoes" />
-          </figure>
+            <img src={user.photoURL} className="w-96" alt="Shoes" />
           <div className="card-body bg-gray-100 rounded-lg">
             <div>
               <h2 className="card-title">{user.firstName}</h2>
@@ -23,7 +21,7 @@ const UserCard = (props) => {
               </h2>
             </div>
             <p className="py-2">{user.about}</p>
-            {currentUser._id.toString() === user._id.toString() ? (
+            {currentUser?._id.toString() === user?._id.toString() ? (
               <div className="card-actions justify-center">
                 <EditProfile setShowToastMessage={setShowToastMessage}/>
               </div>

@@ -1,9 +1,28 @@
-import React from 'react'
+import { useDispatch, useSelector } from "react-redux";
+import { baseURL } from "../utils/constansts";
+import axios from "axios";
+import { addAllConnections } from "../utils/connectionSlice";
+import { useEffect } from "react";
+import List from "./List";
 
 const Connections = () => {
-  return (
-    <div>Connections</div>
-  )
-}
+  const dispatch = useDispatch();
+  const connections = useSelector((store) => store.connections);
+  const getAllConnections = async () => {
+    try {
+      const response = await axios.get(`${baseURL}/users/connections`, {
+        withCredentials: true,
+      });
+      dispatch(addAllConnections(response.data.connections));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    if(!connections)
+      getAllConnections();
+  }, []);
+  return <List title="Connections" />;
+};
 
-export default Connections
+export default Connections;

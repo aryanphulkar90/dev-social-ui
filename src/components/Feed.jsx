@@ -19,7 +19,9 @@ const Feed = () => {
     }
   };
   useEffect(() => {
+    if(!feed){
     getFeed();
+    }
   }, []);
   return feed?.length > 0 && <UserCard user={feed[0]} />;
 };
