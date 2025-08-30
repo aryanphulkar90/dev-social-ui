@@ -10,7 +10,7 @@ const Connections = () => {
   const connections = useSelector((store) => store.connections);
   const getAllConnections = async () => {
     try {
-      const response = await axios.get(`${baseURL}/users/connections`, {
+      const response = await axios.get(`${baseURL}/request/connections`, {
         withCredentials: true,
       });
       dispatch(addAllConnections(response.data.connections));

@@ -10,7 +10,7 @@ const Requests = () => {
   const requests = useSelector((store) => store.requests);
   const getRequests = async () => {
     try {
-      const response = await axios.get(`${baseURL}/users/requests/received`, {
+      const response = await axios.get(`${baseURL}/request/received`, {
         withCredentials: true,
       });
       dispatch(addRequests(response.data.requests));

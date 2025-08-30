@@ -35,7 +35,7 @@ const Login = () => {
       validateEmail(email);
       validatePassword(password, confirmPassword);
       const res = await axios.post(
-        `${baseURL}/signup`,
+        `${baseURL}/auth/signup`,
         {
           firstName,
           lastName,
@@ -59,7 +59,7 @@ const Login = () => {
     try {
       validateEmail(email);
       const res = await axios.post(
-        `${baseURL}/login`,
+        `${baseURL}/auth/login`,
         {
           emailID: email,
           password,
