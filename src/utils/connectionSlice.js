@@ -8,6 +8,7 @@ const connectionSlice = createSlice({
       return action.payload;
     },
     addConnection: (state,action) => {
+      if(!state) state=[] 
       state.push(action.payload)
       return state
     },

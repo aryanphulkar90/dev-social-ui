@@ -30,7 +30,7 @@ const Navbar = () => {
     }
   };
   return (
-    <div className="navbar shadow-sm bg-base-200">
+    <div className="navbar shadow-sm bg-gray-200">
       <div className="flex-1">
         <Link to="/feed" className="btn btn-ghost text-xl">
           devSocial

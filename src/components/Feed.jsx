@@ -4,6 +4,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { addFeed } from "../utils/feedSlice";
 import { useDispatch, useSelector } from "react-redux";
+import ProfileShimmerUI from "./ProfileShimmerUI";
 
 const Feed = () => {
   const dispatch = useDispatch();
@@ -19,10 +20,18 @@ const Feed = () => {
     }
   };
   useEffect(() => {
-    if(!feed){
-    getFeed();
+    if (!feed) {
+      getFeed();
     }
   }, []);
+  if (!feed) return <ProfileShimmerUI />;
+  if (feed.length === 0)
+    return (
+      <p className="text-center">
+        You have seen all your Feed. Come back after some time.
+      </p>
+    );
+
   return feed?.length > 0 && <UserCard user={feed[0]} />;
 };
 

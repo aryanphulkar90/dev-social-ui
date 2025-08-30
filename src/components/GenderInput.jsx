@@ -5,7 +5,7 @@ const GenderInput = ({gender, setGender}) => {
     <>
       <input
         type="text"
-        className="input my-2"
+        className="input my-1"
         placeholder="Gender"
         list="genders"
         defaultValue={capitalizeFirstLetter(gender)}

@@ -17,11 +17,10 @@ const Body = () => {
       });
       dispatch(addUser(user.data.data));
     } catch (err) {
-      if(err.status===401){
-        navigate("/login")
-      }
-      else{
-      console.error("Failed to fetch user:", err.message);
+      if (err.status === 401) {
+        navigate("/login");
+      } else {
+        console.error("Failed to fetch user:", err.message);
       }
     }
   };
@@ -31,8 +30,8 @@ const Body = () => {
   }, []);
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="flex-grow">
-        <Navbar />
+      <Navbar />
+      <div className="flex-grow bg-gray-100 justify-center">
         <Outlet />
       </div>
       <Footer />

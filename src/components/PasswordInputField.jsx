@@ -1,8 +1,8 @@
 const PasswordInputField = (props) => {
-  const {setPassword} = props
+  const {setPassword, placeholder} = props
   return (
-    <div>
-      <label className="input validator">
+    <>
+      <label className="input validator my-1">
         <svg
           className="h-[1em] opacity-50"
           xmlns="http://www.w3.org/2000/svg"
@@ -22,21 +22,14 @@ const PasswordInputField = (props) => {
         <input
           type="password"
           required
-          placeholder="Password"
+          placeholder={placeholder}
           onChange={(e)=>setPassword(e.target.value)}
           minLength="8"
           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
           title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
         />
       </label>
-      <p className="validator-hint hidden">
-        Must be more than 8 characters, including
-        <br />
-        At least one number <br />
-        At least one lowercase letter <br />
-        At least one uppercase letter
-      </p>
-    </div>
+    </>
   );
 }
 

@@ -19,8 +19,8 @@ const Requests = () => {
     }
   };
   useEffect(() => {
-    if(!requests){
-        getRequests();
+    if (!requests) {
+      getRequests();
     }
   }, []);
   return <List title="Requests" users={requests} />;

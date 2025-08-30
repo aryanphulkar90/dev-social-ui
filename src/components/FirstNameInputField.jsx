@@ -1,7 +1,7 @@
 const FirstNameInputField = ({firstName, setFirstName}) => {
   return (
     <>
-      <label className="input validator my-2">
+      <label className="input validator my-1">
         <svg
           className="h-[1em] opacity-50"
           xmlns="http://www.w3.org/2000/svg"

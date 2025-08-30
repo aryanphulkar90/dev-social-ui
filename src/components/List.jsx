@@ -18,6 +18,7 @@ const List = ({ title }) => {
       setUsers(connections);
     } else {
       const allSenders = requests?.map((request) => {
+        console.log({ request_id: request._id, ...request.fromUserId });
         return { request_id: request._id, ...request.fromUserId };
       });
       setUsers(allSenders);
