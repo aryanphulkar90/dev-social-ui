@@ -11,6 +11,9 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
+  const handleIconClick = () =>{
+    if(user) navigate("/feed")
+  }
   const handleLogout = async () => {
     try {
       dispatch(removeUser());
@@ -32,9 +35,9 @@ const Navbar = () => {
   return (
     <div className="navbar shadow-sm bg-gray-200">
       <div className="flex-1">
-        <Link to="/feed" className="btn btn-ghost text-xl">
+        <div className="btn btn-ghost text-xl cursor-pointer" onClick={()=>{handleIconClick()}}>
           devSocial
-        </Link>
+        </div>
       </div>
       {user && (
         <div className="flex gap-2">
