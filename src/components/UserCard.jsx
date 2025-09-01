@@ -5,6 +5,7 @@ import { useState } from "react";
 import ToastMessage from "./ToastMessage";
 import { removeUserFromFeed } from "../utils/feedSlice";
 import axios from "axios";
+import { baseURL } from "../utils/constansts";
 
 const UserCard = (props) => {
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ const UserCard = (props) => {
   const handleRequest = async (status, user_id) => {
     try {
       await axios.post(
-        `http://localhost:3000/request/send/${status}/${user_id}`,
+        `${baseURL}/request/send/${status}/${user_id}`,
         {},
         {
           withCredentials: true,
