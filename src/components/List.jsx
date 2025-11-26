@@ -5,10 +5,11 @@ import { baseURL } from "../utils/constansts";
 import axios from "axios";
 import { removeRequest } from "../utils/requestSlice";
 import { addConnection } from "../utils/connectionSlice";
+import { Link } from "react-router-dom";
+
 
 const List = ({ title }) => {
   const dispatch = useDispatch();
-
   const [users, setUsers] = useState([]);
   const connections = useSelector((store) => store.connections);
   const requests = useSelector((store) => store.requests);
@@ -53,6 +54,7 @@ const List = ({ title }) => {
       console.log(err);
     }
   };
+
   return (
     <div className="m-3">
       <p className="font-bold text-3xl text-center">{title}</p>
@@ -93,6 +95,13 @@ const List = ({ title }) => {
                       Accept
                     </button>
                   </>
+                )}
+                {title === "Connections" && (      
+                    <Link to={`/chat/${user._id}`}>
+                      <button className="btn bg-green-400 rounded-lg">
+                        Chat
+                      </button>
+                    </Link>
                 )}
               </li>
             );
