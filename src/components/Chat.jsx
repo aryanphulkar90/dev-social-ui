@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import useSocket from "../hooks/useSocket";
 import { useSelector } from "react-redux";
@@ -11,6 +11,11 @@ const Chat = () => {
   const [isTyping, setIsTyping] = useState(false)
   const { mySocket, messages } = useSocket({ targetUserId, setIsTyping });
   const lastTimeRef = useRef(0);
+  const scrollRef = useRef(null)
+  
+  useEffect(()=>{
+    scrollRef.current?.scrollIntoView({behaviour : "smooth"})
+  },[messages])
 
   const sendMessage = () => {
     mySocket.emit("sendMessage", {
@@ -62,11 +67,13 @@ const Chat = () => {
         {messages.map((msg, index) => {
           return (
             <div
+              ref={scrollRef}
               key={index}
               className={
                 "chat " +
                 (user.firstName === msg?.firstName ? "chat-end" : "chat-start")
               }
+
             >
               <div className="chat-header">
                 {msg?.firstName}
