@@ -1,82 +1,16 @@
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { createSocketConnection } from "../utils/socket";
+import useSocket from "../hooks/useSocket";
 import { useSelector } from "react-redux";
-import { baseURL } from "../utils/constansts";
-import axios from "axios";
 
 const Chat = () => {
   const { targetUserId } = useParams();
-  const [mySocket, setMySocket] = useState(null);
-  const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const user = useSelector((store) => store.user);
   const userId = user?._id;
-
-  const fetchChatMessages = async () => {
-    const chat = await axios.get(baseURL + "/chat/" + targetUserId, {
-      withCredentials: true,
-    });
-
-    console.log(chat);
-
-    const chatMessages = chat?.data?.messages.map((msg) => {
-      console.log(msg);
-      const { senderId, text, updatedAt, _id, seen } = msg;
-      return {
-        firstName: senderId?.firstName,
-        text,
-        updatedAt,
-        _id,
-        seen,
-      };
-    });
-
-    setMessages(chatMessages);
-  };
-
-  useEffect(() => {
-    fetchChatMessages();
-  }, []);
-
-  useEffect(() => {
-    if (!userId) return;
-    const newSocket = createSocketConnection();
-    setMySocket(newSocket);
-    newSocket.emit("joinChat", {
-      firstName: user.firstName,
-      userId,
-      targetUserId,
-    });
-
-    newSocket.on("messageReceived", (msg) => {
-      setMessages((prevMessages) => [...prevMessages, msg]);
-      if (msg.firstName != user.firstName) {
-        newSocket.emit("messageSeen", {
-          userId,
-          targetUserId,
-        });
-      }
-    });
-    
-    newSocket.emit("messageSeen", {
-      userId,
-      targetUserId,
-    });
-
-    const handleSeen = ({ readerId }) => {
-      if (readerId === userId) return;
-      setMessages((prevMessages) =>
-        prevMessages.map((msg) => ({ ...msg, seen: true }))
-      );
-    };
-
-    newSocket.on("messageSeen", handleSeen);
-
-    return () => {
-      newSocket.disconnect();
-    };
-  }, [userId, targetUserId]);
+  const [isTyping, setIsTyping] = useState(false)
+  const { mySocket, messages } = useSocket({ targetUserId, setIsTyping });
+  const lastTimeRef = useRef(0);
 
   const sendMessage = () => {
     mySocket.emit("sendMessage", {
@@ -109,10 +43,20 @@ const Chat = () => {
     }
   };
 
+  const handleTyping = () => {
+    const now = Date.now();
+    if (now - lastTimeRef.current > 3000) {
+      mySocket.emit("typing", { userId, targetUserId });
+      lastTimeRef.current = now;
+    }
+  };
+
   return (
     <div className="w-1/2 mx-auto border border-gray-600 h-[70vh] m-5 flex flex-col">
       <div className="border-b border-gray-600 p-5 text-center">
-        <h1>Chat</h1>
+        <h1>{"Chat " + 
+          ((isTyping) ? "(Typing...)" : "")
+        }</h1>
       </div>
       <div className="flex-1 overflow-y-scroll p-5">
         {messages.map((msg, index) => {
@@ -145,7 +89,10 @@ const Chat = () => {
       <div className="border-t border-gray-600 flex p-5">
         <input
           value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
+          onChange={(e) => {
+            setNewMessage(e.target.value);
+            handleTyping();
+          }}
           className="border border-gray-600 flex-1 m-1 p-2"
         />
         <button className="m-1 p-2 btn btn-secondary" onClick={sendMessage}>
